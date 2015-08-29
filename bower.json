@@ -1,0 +1,30 @@
+{
+  "name": "coder chat",
+  "version": "0.0.0",
+  "authors": [
+    "罗冉 <luoran1988@126.com>"
+  ],
+  "description": "angular",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "angular",
+    "nodejs"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.4",
+    "angular-bootstrap": "~0.13.3",
+    "angular-resource": "~1.4.4",
+    "angular-ui-router": "~0.2.15",
+    "bootstrap": "~3.3.5"
+  }
+}
