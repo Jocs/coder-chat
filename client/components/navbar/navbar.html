@@ -21,7 +21,11 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-hide="isLoggedIn"><a href="login">登陆</a></li>
+				<li ng-hide="isLoggedIn">
+					<a href='#/login' ng-click='showLogin()'>
+						<span class='glyphicon glyphicon-user'>&nbsp;登陆
+					</a>
+				</li>
 				<li ng-show='isLoggedIn'><a href="#" class='img'><img ng-src={{currentUser.src}} alt=""></a></li>
 				<li ng-show='isLoggedIn'>
 				    <button class='navbar-btn btn btn-success'>
@@ -38,7 +42,6 @@
 					</div>
 				</div>	
 			</form>
-			
 		</div>
 	</div>
 </nav>

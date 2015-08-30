@@ -24,7 +24,7 @@ angular.module('cc',['ui.bootstrap'])
 				'icon' : 'glyphicon glyphicon-envelope'
 			}
 		];
-		$scope.isLoggedIn = true;
+		$scope.isLoggedIn = false;
 		$scope.currentUser = {
 			'name':'ransixi',
 			'src': 'assets/images/profile.jpg'
