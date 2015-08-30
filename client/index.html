@@ -3,8 +3,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<link rel="stylesheet" href="./bower/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="./components/navbar/navbar.css">
 </head>
-<body>
-	hello world
+<body ng-app="cc">
+	<div ng-include="'./components/navbar/navbar.html'"></div>
+
+	<!--js 文件引用-->
+	<script src='./bower/jquery/dist/jquery.js'></script>
+	<script src='./bower/angular/angular.js'></script>
+	<script src='./bower/angular-bootstrap/ui-bootstrap-tpls.js'></script>
+	<script src='./bower/angular-resource/angular-resource.js'></script>
+	<script src='./bower/angular-ui-router/release/angular-ui-router.js'></script>
+	<script src='./app/app.js'></script>
+	<script src='./components/navbar/navbar.js'></script>
 </body>
 </html>

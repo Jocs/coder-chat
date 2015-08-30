@@ -1,0 +1,48 @@
+#brand{
+	color:#55acee;
+	font-size:25px;
+	position: absolute;
+	top:13px;
+	left:50%;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	margin-left: -12px;
+}
+#main-nav ul.navbar-right{
+	margin-right: 50px;
+}
+#main-nav ul.navbar-right li{
+	margin-left: 30px;
+}
+#main-nav ul a img{
+	width:36px;
+	height: 36px;
+}
+#main-nav ul a.img{
+	width: 36px;
+	height: 36px;
+	padding:0;
+	margin-top: 9px;
+	border-radius: 5px;
+	overflow: hidden;
+}
+#main-nav form[role='serach'] input{
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-right: none;
+}
+#main-nav form[role='serach'] .input-group-addon{
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+	background: #fff;
+	border-left: none;
+}
+
+
+
+
+
+
+
+
