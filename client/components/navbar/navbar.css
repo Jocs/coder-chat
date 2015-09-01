@@ -12,20 +12,25 @@
 #main-nav ul.navbar-right{
 	margin-right: 50px;
 }
-#main-nav ul.navbar-right li{
+#main-nav ul.navbar-right>li{
 	margin-left: 30px;
 }
 #main-nav ul a img{
 	width:34px;
 	height: 34px;
 }
-#main-nav ul a.img{
+#main-nav a[id="simple-dropdown"]{
+	display: block;
 	width: 34px;
 	height: 34px;
 	padding:0;
 	margin-top: 9px;
 	border-radius: 5px;
 	overflow: hidden;
+}
+#main-nav .dropdown-menu{
+	left:-40px;
+	min-width: 120px;
 }
 #main-nav form[role='serach'] input{
 	border-top-left-radius: 20px;

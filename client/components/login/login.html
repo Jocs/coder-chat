@@ -1,19 +1,54 @@
-<div ng-controller="LoginController">
+<div ng-controller="LoginController" id='loginCop'>
     <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
-        </div>
-        <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in items">
-                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ selected.item }}</b>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div>
+        <form name='signup_form' novalidate ng-if='isShowSignup' ng-submit='signupForm()'>
+            <div class="modal-header">
+                <h4 class="modal-title">欢迎加入CC</h4>
+                <p> 与世界分享你的知识、经验和见解</p>
+            </div>
+            <div class="modal-body">
+                <div class='form-group' >
+                    <input type="text" name='name' placeholder='姓名' class='form-control'
+                    ng-model='signup.name' ng-minlength='2' required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name='nickname' placeholder='昵称' class='form-control' 
+                    ng-model='signup.nickname' ng-minlength='3' ng-maxlength='20' required >
+                </div>
+                <div class='form-group'>
+                    <input type="email" name='email' placeholder='邮箱' class='form-control'
+                    ng-model='signup.email' required >
+                </div>
+                <div class='form-group'>
+                    <input type="password" name='password' placeholder='密码' class='form-control'
+                    ng-model='signup.password' required ng-minlength='6'>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href='#' ng-click="change()">已有账号请直接登录</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" type='submit'>注册</button>
+                <a class="btn btn-warning"  ng-click="cancel()">取消</a>
+            </div>
+        </form>
+        <form name='login_form' novalidate  ng-if='!isShowSignup' ng-submit='loginForm()'>
+            <div class="modal-header">
+                <h4 class="modal-title">欢迎您回来</h4>
+                <p> 与世界分享你的知识、经验和见解</p>
+            </div>
+            <div class="modal-body">
+                <div class='form-group'>
+                    <input type="email" name='email' placeholder='邮箱' class='form-control'
+                    ng-model='login.email' required>
+                </div>
+                <div class='form-group'>
+                    <input type="password" name='password' placeholder='密码' class='form-control'
+                    ng-model='login.password' required ng-minlength='6'>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href='#' ng-click='change()'>还没有CC账号？</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" type='submit'>登录</button>
+                <a class="btn btn-warning"  ng-click="cancel()">取消</a>
+            </div>
+        </form>
     </script>
 </div>

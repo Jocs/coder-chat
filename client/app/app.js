@@ -1,28 +1,28 @@
 angular.module('cc',[
 	'ui.bootstrap',
 	'ngCookies',
-	'ngResourse',
-	'ui.router',
-	'ui.bootstrap'
+	'ngResource',
+	'ui.router'
 	])
-	.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
+	.config(function( $urlRouterProvider, $locationProvider, $httpProvider){
 		$urlRouterProvider
 			.otherwise('/');
 		$locationProvider.html5Mode(true);
 		$httpProvider.interceptors.push('authInterceptor');
 	})
-	.factory('authInterceptor', function($location, $cookies, $q){
+	.factory('authInterceptor', function($rootScope, $location, $cookies, $q){
 		return {
 			request: function(config){
 				config.headers = config.headers || {};
 				if($cookies.get('token')){
-					config.headers = 'Bearer ' + $cookies.get('token');
+					config.headers.authorization = 'Bearer ' + $cookies.get('token');
 				}
 				return config;
 			},
 			responseError: function(response){
 				if(response.status === 401){
-					$location.path('/login');
+					$location.path('/');
+					$rootScope.showLogin('sm');
 					$cookies.remove('token');
 					return $q.reject(response);
 				} else {
@@ -32,9 +32,14 @@ angular.module('cc',[
 		};
 	})
 	.run(function($rootScope, $location, Auth){
-		$rootScope.$on('stateChangeStart', function(event, next){
-			
-		})
+		$rootScope.$on('$stateChangeStart', function(event,toState){
+			Auth.isLoggedInAsync(function(isLoggedIn){
+				if(!isLoggedIn &&  toState.name !== 'home'){
+					event.preventDefault();
+					$rootScope.showLogin('sm');
+				}
+			});
+		});
 	});
 
 

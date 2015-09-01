@@ -6,6 +6,6 @@ var config = require('../config/environment');
 
 require('./local/passport').setUp(User, config);
 
-router.use('./local', require('./local'));
+router.use('/local', require('./local'));
 
 module.exports = router;

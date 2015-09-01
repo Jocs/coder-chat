@@ -17,15 +17,16 @@ function isAuthenticated(){
 	return compose()
 		.use(function(req, res, next){
 			if(req.query && req.query.hasOwnProperty('access_token')){
-				req.headers.authorization = 'Bearer' + req.query.access_token;
-			}
+				req.headers.authorization = 'Bearer ' + req.query.access_token;
+			};
 			validateJwt(req, res, next);
 		})
 		.use(function(req, res, next){
+			console.log(req.user);
 			User.findById(req.user._id, function(err, user){
 				if(err) return next(err);
 				if(!user) return res.status(401).send('Unauthorized');
-				return req.user = user;
+				req.user = user;
 				next();
 			})
 		});
@@ -45,8 +46,8 @@ function hasRole(roleRequired){
 /*
 * make a token by config.secrets.session
 */
-function signToken(id,role){
-	return jwt.sign({_id:id, role:role}, config.secrets.session, {expiresInMinites: 60*5})
+function signToken(id, role){
+	return jwt.sign({_id:id,role:role}, config.secrets.session, {expiresInMinites: 60*5})
 }
 function setTokenCookie(req, res){
 	if(!req.user) res.status(404).json({ message: 'Something went wrong, please try again.'});

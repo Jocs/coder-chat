@@ -1,6 +1,5 @@
-angular.module('cc').controller('LoginController', function ($rootScope,$scope, $modal, $log) {
-
-  $scope.items = ['item1', 'item2', 'item3'];
+angular.module('cc').controller('LoginController', 
+  function ($rootScope,$scope, $modal, $log) {
 
   $scope.animationsEnabled = true;
 
@@ -10,19 +9,9 @@ angular.module('cc').controller('LoginController', function ($rootScope,$scope, 
       animation: $scope.animationsEnabled,
       templateUrl: 'myModalContent.html',
       controller: 'ModalInstanceCtrl',
-      size: size,
-      resolve: {
-        items: function () {
-          return $scope.items;
-        }
-      }
+      size: size
     });
 
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
   };
 
 });
@@ -30,15 +19,38 @@ angular.module('cc').controller('LoginController', function ($rootScope,$scope, 
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
 
-angular.module('cc').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
-
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
+angular.module('cc').controller('ModalInstanceCtrl', 
+  function ($rootScope, $scope, $location, $modalInstance, Auth) {
+  $scope.isShowSignup = false;
+  $scope.change = function(){
+    $scope.isShowSignup = !$scope.isShowSignup;
   };
 
-  $scope.ok = function () {
-    $modalInstance.close($scope.selected.item);
+  $scope.signup = {};
+  $scope.login = {};
+
+  $scope.signupForm = function () {
+    Auth.createUser($scope.signup)
+      .then(function(){
+        $location.path('/');
+        $rootScope.isLoggedIn = true;
+        $modalInstance.close();
+      },
+      function(err){
+        console.log(err);
+      });  
+  };
+
+  $scope.loginForm = function () {
+    Auth.login($scope.login)
+      .then(function(){
+        $location.path('/');
+        $rootScope.isLoggedIn = true;
+      },
+      function(err){
+        console.log(err);
+      });
+    $modalInstance.close();
   };
 
   $scope.cancel = function () {

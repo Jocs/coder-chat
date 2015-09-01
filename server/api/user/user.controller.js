@@ -55,9 +55,10 @@ module.exports.show = function(req, res, next){
 */
 module.exports.me = function(req, res, next){
 	var id = req.user._id;
-	User.findById(id, '-salt -hashedPassword', function(err, user){ //user中不包含salt 和 hashedpassword
+	User.findOne({_id: id }, '-salt -hashedPassword', function(err, user){ //user中不包含salt 和 hashedpassword
 		if(err) return next(err);
 		if(!user) return res.status(401).send('Unauthorized');
+		console.log(user);
 		res.status(200).json(user);
 	});
 }

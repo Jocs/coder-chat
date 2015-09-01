@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<base href="/">
 	<title>Document</title>
 	<link rel="stylesheet" href="./bower/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" href="./components/navbar/navbar.css">
@@ -11,15 +12,29 @@
 <body ng-app="cc">
 	<div ng-include="'./components/navbar/navbar.html'"></div>
 	<div ng-include="'./components/login/login.html'"></div>
+	<div ui-view></div>
 
 	<!--js 文件引用-->
 	<script src='./bower/jquery/dist/jquery.js'></script>
 	<script src='./bower/angular/angular.js'></script>
+	<script src='./bower/angular-cookies/angular-cookies.js'></script>
 	<script src='./bower/angular-bootstrap/ui-bootstrap-tpls.js'></script>
 	<script src='./bower/angular-resource/angular-resource.js'></script>
 	<script src='./bower/angular-ui-router/release/angular-ui-router.js'></script>
+
 	<script src='./app/app.js'></script>
+	<script src='./app/main/main.js'></script>
+	<script src='./app/main/main.controller.js'></script>
+	<script src='./app/reminder/reminder.js'></script>
+	<script src='./app/reminder/reminder.controller.js'></script>
+	<script src='./app/message/message.js'></script>
+	<script src='./app/message/message.controller.js'></script>
+	
+	<script src='./components/auth/auth.service.js'></script>
+	<script src='./components/auth/user.service.js'></script>
+
 	<script src='./components/navbar/navbar.js'></script>
 	<script src='./components/login/login.js'></script>
+	
 </body>
 </html>

@@ -26,8 +26,8 @@ UserSchema
   .virtual('password')
   .set(function(password){
   	this._password = password;
-  	this.salt = makeSalt();
-  	this.hashedPassword = encryptPassword(password);
+  	this.salt = this.makeSalt();
+  	this.hashedPassword = this.encryptPassword(password);
   })
   .get(function(){
   	return this._password;
@@ -73,18 +73,22 @@ UserSchema
 UserSchema
 	.path('email')
 	.validate(function(value, respond){
-		var self = this;
-		this.constructor.findOne({email:vlaue}, function(err,user){
+		//var self = this;
+		this.constructor.findOne({email:value}, function(err,user){
 			if(err) throw err;
 			if(user){
-				if(self.id === user.id) return respond(true);
+				if(this.id === user.id) return respond(true);
 				return respond(false);
 			};
 			return respond(true);
-		});
+		}.bind(this));
 	},'Email has been used, please use another one!');
 
 /*pre save hook*/
+/*
+*
+*
+*/
 UserSchema.pre('save', function(next){
 	if(!this.isNew) return next();
 	if(!(this.hashedPassword && this.hashedPassword.length)) 
@@ -94,7 +98,7 @@ UserSchema.pre('save', function(next){
 
 UserSchema.methods = {
 	authenticate: function(text){
-		return encryptPassword(text) === this.hashedPassword;
+		return this.encryptPassword(text) === this.hashedPassword;
 	},
 	makeSalt: function(){
 		return crypto.randomBytes(16).toString('base64');

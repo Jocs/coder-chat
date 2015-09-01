@@ -14,6 +14,7 @@ angular.module('cc')
 			*  return: promise object
 			*/
 			login: function(user,cb){
+
 				var cb = cb || angular.noop;
 				var data = {
 					email: user.email,
@@ -49,7 +50,7 @@ angular.module('cc')
 			*/
 			createUser : function(user, cb){
 				var cb = cb || angular.noop;
-				return User.save({},user,
+				return User.save(user,
 					function(data){
 						$cookies.put('token', data.token);
 						currentUser = User.getMe();
@@ -60,8 +61,28 @@ angular.module('cc')
 						return cb(err);
 					}.bind(this)).$promise;
 			},
+			isLoggedIn: function() {
+		        return currentUser.hasOwnProperty('role'); 
+		    },
+		    isLoggedInAsync: function(cb){
+		    	if(currentUser.hasOwnProperty('$promise')){
+		    		
+		    		currentUser.$promise.then(function(){
+		    			cb(true);
+		    		},
+		    		function(){
+		    			cb(false);
+		    		});
+		    	} else if (currentUser.hasOwnProperty('role')){
+		    		cb(true);
+		    	} else {
+		    		cb(false);
+		    	}
+		    }
+
 
 		}; 
+
 
 	});
 

@@ -21,9 +21,9 @@
     *  $resource 可以自定义方法。自定义方法传入$resource(params1,params2,params3)
     *  中的第三个参数。 如下：
     */ 
-angular.module('cc',[])
+angular.module('cc')
 	.factory('User', function($resource){
-		return $resuorce('/api/user/:id/:controller',
+		return $resource('/api/user/:id/:controller',
 			{id:'@_id'},
 			{
 				changePassword:{

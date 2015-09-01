@@ -14,7 +14,7 @@
 		<div collapse="isCollapsed" class="collapse navbar-collapse" id='main-nav'>
 			<ul class="nav navbar-nav">
 				<li ng-repeat="item in menu" ng-class='{active: isActive(item.link)}'>
-					<a ng-href={{item.link}}>
+					<a ui-sref={{item.state}}>
 						<span class={{item.icon}}></span>
 						&nbsp;{{item.title}}
 					</a>
@@ -22,11 +22,31 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-hide="isLoggedIn">
-					<a href='#/login' ng-click='showLogin()'>
+					<a href='#' ng-click='showLogin("sm")'>
 						<span class='glyphicon glyphicon-user'>&nbsp;登陆
 					</a>
 				</li>
-				<li ng-show='isLoggedIn'><a href="#" class='img'><img ng-src={{currentUser.src}} alt=""></a></li>
+				<li ng-show='isLoggedIn'>
+					<span dropdown on-toggle="toggled(open)">
+					    <a href id="simple-dropdown" dropdown-toggle>
+					        <img ng-src="{{currentUser.src}}" alt="currentUser.name">
+					    </a>
+					    <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
+					        <li ng-repeat="choice in profileInfo">
+					            <a href='{{choice.link}}'>
+					                <span class='{{choice.icon}}'></span>
+					                {{choice.content}}
+					            </a>
+					        </li>
+					        <li class='divider'></li>
+					        <li><a href="#" ng-click="logout()">
+					            <span class='glyphicon glyphicon-off'></span>&nbsp;退出
+					        </a></li>
+					    </ul>
+					</span>
+													
+				</li>
+	
 				<li ng-show='isLoggedIn'>
 				    <button class='navbar-btn btn btn-success'>
 					    <span class='glyphicon glyphicon-send'></span>

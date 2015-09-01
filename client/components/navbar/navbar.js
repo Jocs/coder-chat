@@ -1,5 +1,5 @@
-angular.module('cc',['ui.bootstrap'])
-	.controller('NavController', function($scope, $location){
+angular.module('cc')
+	.controller('NavController', function($rootScope, $scope, $location, Auth){
 		$scope.isCollapsed = true;
 		$scope.brand = {
 			'icon':'glyphicon glyphicon-globe'
@@ -10,21 +10,25 @@ angular.module('cc',['ui.bootstrap'])
 		$scope.menu = [
 			{
 				'title':'主页',
-				'link' : '/',
-				'icon' : 'glyphicon glyphicon-home'
+				'state' : 'home',
+				'icon' : 'glyphicon glyphicon-home',
+				'link':'/'
 			},
 			{
 				'title':'通知',
-				'link' :'reminder',
-				'icon' : 'glyphicon glyphicon-bell'
+				'state' :'reminder',
+				'icon' : 'glyphicon glyphicon-bell',
+				'link':'/reminder'
 			},
 			{
 				'title':'消息',
-				'link' :'message',
-				'icon' : 'glyphicon glyphicon-envelope'
+				'state' :'message',
+				'icon' : 'glyphicon glyphicon-envelope',
+				'link':'/message'
 			}
 		];
-		$scope.isLoggedIn = false;
+		console.log($location.path());
+		$rootScope.isLoggedIn = Auth.isLoggedIn();
 		$scope.currentUser = {
 			'name':'ransixi',
 			'src': 'assets/images/profile.jpg'
@@ -32,4 +36,32 @@ angular.module('cc',['ui.bootstrap'])
 		$scope.isActive = function(link){
 			return $location.path() === link;
 		};
+		//dropdown menu profile info
+		$scope.profileInfo = [
+			{'link':'/profile','content':'个人主页', 'icon': 'glyphicon glyphicon-user'},
+			{'link':'/setting','content':'个人设置', 'icon': 'glyphicon glyphicon-cog'},
+			{'link':'/friendslist','content':'好友列表', 'icon': 'glyphicon glyphicon-list'}
+		];
+		$scope.status = {
+			isopen: false
+		};
+		//logout
+		$scope.logout = function(){
+			Auth.logout();
+			$location.path('/');
+			$rootScope.isLoggedIn = false;
+		};
+
+
+
+
+
+
+
+
+
+
+
+
+
 	});
