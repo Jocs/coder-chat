@@ -1,6 +1,6 @@
 <div ng-controller="LoginController" id='loginCop'>
     <script type="text/ng-template" id="myModalContent.html">
-        <form name='signup_form' novalidate ng-if='isShowSignup' ng-submit='signupForm()'>
+        <form name='signup_form' novalidate ng-if='isShowSignup' ng-submit='signupForm(signup_form)'>
             <div class="modal-header">
                 <h4 class="modal-title">欢迎加入CC</h4>
                 <p> 与世界分享你的知识、经验和见解</p>
@@ -8,19 +8,74 @@
             <div class="modal-body">
                 <div class='form-group' >
                     <input type="text" name='name' placeholder='姓名' class='form-control'
-                    ng-model='signup.name' ng-minlength='2' required>
+                    ng-model='signup.name' ng-minlength='2' required ng-pattern='/^\w+$/'>
+                    <div ng-messages='signup_form.name.$error' ng-if='submitted' role='alert' 
+                    class='bg-danger warning-messages'>
+                        <div ng-message='minlength' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>姓名需大于两个字
+                        </div>
+                        <div ng-message='required' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>姓名需要填写
+                        </div>
+                        <div ng-message='pattern' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>姓名不能有空格或其他非法字符
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <input type="text" name='nickname' placeholder='昵称' class='form-control' 
-                    ng-model='signup.nickname' ng-minlength='3' ng-maxlength='20' required >
+                    ng-model='signup.nickname' required nickname-validation>
+                    <div ng-messages='signup_form.nickname.$error' ng-if='submitted' role='alert' 
+                    class='bg-danger warning-messages'>
+                         <div ng-message='minlength,maxlength' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>昵称需在3到20个字符之间
+                        </div>
+                         <div ng-message='required' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>昵称需要填写
+                        </div>
+                        <div ng-message='requiredI' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>昵称需要填写
+                        </div>
+                        <div ng-message='pattern' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>昵称不能有空格或其他非法字符
+                        </div>
+                        
+                        <div ng-message='checking' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;Checking...
+                        </div>
+                        <div ng-message='isUsed' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>&nbsp;昵称已被他人注册
+                        </div>  
+                    </div>
                 </div>
                 <div class='form-group'>
                     <input type="email" name='email' placeholder='邮箱' class='form-control'
-                    ng-model='signup.email' required >
+                    ng-model='signup.email' required ng-pattern='/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/'>
+                    <div ng-messages='signup_form.email.$error' ng-if='submitted' role='alert' 
+                    class='bg-danger warning-messages'>
+                        <div ng-message='required' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>邮箱需要填写
+                        </div>
+                        <div ng-message='pattern' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>邮箱格式不正确
+                        </div>
+                    </div>
                 </div>
                 <div class='form-group'>
                     <input type="password" name='password' placeholder='密码' class='form-control'
-                    ng-model='signup.password' required ng-minlength='6'>
+                    ng-model='signup.password' required ng-minlength='6' ng-pattern='/^\w+$/'>
+                    <div ng-messages="signup_form.password.$error" ng-if='submitted' role='alert' 
+                    class='bg-danger warning-messages'>
+                        <div ng-message='minlength' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>密码需大于6个字符
+                        </div>
+                        <div ng-message='required' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>密码需要填写
+                        </div>
+                        <div ng-message='pattern' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>密码不能有空格或其他非法字符
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

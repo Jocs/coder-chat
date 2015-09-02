@@ -22,6 +22,7 @@ angular.module('cc').controller('LoginController',
 angular.module('cc').controller('ModalInstanceCtrl', 
   function ($rootScope, $scope, $location, $modalInstance, Auth) {
   $scope.isShowSignup = false;
+  
   $scope.change = function(){
     $scope.isShowSignup = !$scope.isShowSignup;
   };
@@ -29,16 +30,23 @@ angular.module('cc').controller('ModalInstanceCtrl',
   $scope.signup = {};
   $scope.login = {};
 
-  $scope.signupForm = function () {
-    Auth.createUser($scope.signup)
-      .then(function(){
-        $location.path('/');
-        $rootScope.isLoggedIn = true;
-        $modalInstance.close();
-      },
-      function(err){
-        console.log(err);
-      });  
+  $scope.submitted = false;
+
+  $scope.signupForm = function (form) {
+    
+    if(form.$valid){
+      Auth.createUser($scope.signup)
+        .then(function(){
+          $location.path('/');
+          $rootScope.isLoggedIn = true;
+          $modalInstance.close();
+        },
+        function(err){
+          console.log(err);
+        }); 
+    } else {
+      $scope.submitted = true;
+    }
   };
 
   $scope.loginForm = function () {

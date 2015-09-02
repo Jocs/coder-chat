@@ -73,15 +73,15 @@ UserSchema
 UserSchema
 	.path('email')
 	.validate(function(value, respond){
-		//var self = this;
+		var self = this;
 		this.constructor.findOne({email:value}, function(err,user){
 			if(err) throw err;
 			if(user){
-				if(this.id === user.id) return respond(true);
+				if(self.id === user.id) return respond(true);
 				return respond(false);
 			};
 			return respond(true);
-		}.bind(this));
+		});
 	},'Email has been used, please use another one!');
 
 /*pre save hook*/

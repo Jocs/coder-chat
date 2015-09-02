@@ -21,6 +21,7 @@ module.exports.create = function(req, res){
 		user.provider = 'local';
 		user.role = 'user';
 		user.save(function(err, user1){
+			console.log(err);
 			if(err) return res.status(422).json(err);
 			var token = auth.signToken(user1._id, user1.role);
 			res.status(200).json({token: token});
@@ -42,8 +43,23 @@ module.exports.show = function(req, res, next){
 			res.status(200).json(user.profile);
 		}
 	});
-}
+};
 
+/*
+* check unique nickname
+*/
+module.exports.checkNickname = function(req, res, next){
+	var nickname = req.body.nickname;
+	console.log(req.body);
+	User.findOne({nickname: nickname}, function(err, user){
+		if(err) return next(err);
+		if(!user){
+			res.send({isUsed: false});
+		} else {
+			res.send({isUsed: true});
+		}
+	});
+};
 
 /*
 * get current user info,(single user) "-salt -hashedPassword"

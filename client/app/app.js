@@ -2,7 +2,9 @@ angular.module('cc',[
 	'ui.bootstrap',
 	'ngCookies',
 	'ngResource',
-	'ui.router'
+	'ui.router',
+	'ngMessages',
+	'ngAnimate'
 	])
 	.config(function( $urlRouterProvider, $locationProvider, $httpProvider){
 		$urlRouterProvider

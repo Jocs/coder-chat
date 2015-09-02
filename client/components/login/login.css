@@ -1,0 +1,16 @@
+/*warning 动画效果*/
+.warning-messages{
+	position: relative;
+	border-radius: 5px;
+	padding-left: 10px;
+}
+@-webkit-keyframes animateView-active{
+	0% {left: 0;}     10% {left: 5px;}  20% {left: 0;}
+	30% {left: -5px;} 40% {left: 0;}    50% {left: 5px;}
+	60% {left: 0;}    70% {left: -5px;} 80% {left: 0;}
+	90% {left: 5px;}  100%{left:0;}
+}
+.warning-messages.ng-active{
+	-webkit-animation:.5s ease-in animateView-active;
+}
+
