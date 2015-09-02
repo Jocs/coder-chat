@@ -82,7 +82,7 @@ UserSchema
 			};
 			return respond(true);
 		});
-	},'Email has been used, please use another one!');
+	},'邮箱已被使用,请换个邮箱再试!');
 
 /*pre save hook*/
 /*

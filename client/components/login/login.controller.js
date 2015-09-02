@@ -1,3 +1,5 @@
+'use strict'
+
 angular.module('cc').controller('LoginController', 
   function ($rootScope,$scope, $modal, $log) {
 
@@ -31,9 +33,9 @@ angular.module('cc').controller('ModalInstanceCtrl',
   $scope.login = {};
 
   $scope.submitted = false;
-
-  $scope.signupForm = function (form) {
-    
+  $scope.errors = {};
+  /*处理注册的函数*/
+  $scope.signupForm = function (form) {    
     if(form.$valid){
       Auth.createUser($scope.signup)
         .then(function(){
@@ -42,13 +44,18 @@ angular.module('cc').controller('ModalInstanceCtrl',
           $modalInstance.close();
         },
         function(err){
-          console.log(err);
+          var errors = err.data.errors;
+          angular.forEach(errors, function(error){
+            form[error.path].$setValidity('mongoose', false);
+            $scope.errors[error.path] = error.message;
+          });
         }); 
     } else {
+      console.log('eee');
       $scope.submitted = true;
     }
   };
-
+/*处理登陆的函数*/
   $scope.loginForm = function () {
     Auth.login($scope.login)
       .then(function(){

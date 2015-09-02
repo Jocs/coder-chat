@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <div class='form-group' >
                     <input type="text" name='name' placeholder='姓名' class='form-control'
-                    ng-model='signup.name' ng-minlength='2' required ng-pattern='/^\w+$/'>
+                    ng-model='signup.name' ng-minlength='2' required ng-pattern='/^[\w\u4E00-\u9FFF]+$/'>
                     <div ng-messages='signup_form.name.$error' ng-if='submitted' role='alert' 
                     class='bg-danger warning-messages'>
                         <div ng-message='minlength' class='text-warning warning-message'>
@@ -50,7 +50,8 @@
                 </div>
                 <div class='form-group'>
                     <input type="email" name='email' placeholder='邮箱' class='form-control'
-                    ng-model='signup.email' required ng-pattern='/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/'>
+                    ng-model='signup.email' required ng-pattern='/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/'
+                    mongoose-error>
                     <div ng-messages='signup_form.email.$error' ng-if='submitted' role='alert' 
                     class='bg-danger warning-messages'>
                         <div ng-message='required' class='text-warning warning-message'>
@@ -58,6 +59,9 @@
                         </div>
                         <div ng-message='pattern' class='text-warning warning-message'>
                             <span class='glyphicon glyphicon-exclamation-sign'></span>邮箱格式不正确
+                        </div>
+                         <div ng-message='mongoose' class='text-warning warning-message'>
+                            <span class='glyphicon glyphicon-exclamation-sign'></span>{{errors.email}}
                         </div>
                     </div>
                 </div>

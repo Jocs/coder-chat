@@ -47,13 +47,39 @@ angular.module('cc')
   						ctrl.$setValidity('checking',true);
   						ctrl.$setValidity('isUsed', false);
   					} else {
+  						ctrl.$setValidity('required', true);
+  						ctrl.$setValidity('pattern', true);
   						ctrl.$setValidity('requiredI',true);
   						ctrl.$setValidity('minlength',true);
+  						ctrl.$setValidity('maxlength', true);
   						ctrl.$setValidity('checking',true);
   						ctrl.$setValidity('isUsed', true);
+
   					}
   				})
+  				return val;
   			});
   		}
   	};
-  });
+  })
+.directive('mongooseError', function(){
+	return{
+		restrict: 'A',
+		require:'ngModel',
+		link: function(scope, ele, attrs, ctrl){
+			ele.on('keydown', function(){
+				ctrl.$setValidity('mongoose', true);
+			});
+		}
+	};
+});
+
+
+
+
+
+
+
+
+
+

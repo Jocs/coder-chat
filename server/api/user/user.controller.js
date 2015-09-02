@@ -18,6 +18,7 @@ module.exports.index = function(req, res){
 */
 module.exports.create = function(req, res){
 	User.create(req.body, function(err, user){
+		if(err) return res.status(422).json(err);
 		user.provider = 'local';
 		user.role = 'user';
 		user.save(function(err, user1){
