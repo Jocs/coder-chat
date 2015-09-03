@@ -11,10 +11,10 @@ exports.setUp = function(User, config){
 			    email: email.toLowerCase()
 		    }, 
 			function(err, user){
-			if(err) return done(err);
-			if(!user) return done(null, false, {message:'Incorrect email'});
-			if(!user.authenticate(password)){
-				return done(null, false, {message: 'Incorrect password'});
+				if(err) return done(err);
+				if(!user) return done(null, false, {field:'email', message:'邮箱输入不正确'});
+				if(!user.authenticate(password)){	
+					return done(null, false, {field:'password', message: '密码输入不正确'});
 			}
 			return done(null,user);
 		})

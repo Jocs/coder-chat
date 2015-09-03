@@ -24,7 +24,6 @@ angular.module('cc',[
 			responseError: function(response){
 				if(response.status === 401){
 					$location.path('/');
-					$rootScope.showLogin('sm');
 					$cookies.remove('token');
 					return $q.reject(response);
 				} else {

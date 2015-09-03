@@ -51,21 +51,28 @@ angular.module('cc').controller('ModalInstanceCtrl',
           });
         }); 
     } else {
-      console.log('eee');
       $scope.submitted = true;
     }
   };
 /*处理登陆的函数*/
-  $scope.loginForm = function () {
-    Auth.login($scope.login)
+  $scope.isLogged = false;
+  $scope.siginError = {};
+  $scope.loginForm = function (form) {
+    if(form.$valid){
+      Auth.login($scope.login)
       .then(function(){
-        $location.path('/');
-        $rootScope.isLoggedIn = true;
+         $location.path('/');
+         $rootScope.isLoggedIn = true;
+         $modalInstance.close();
       },
       function(err){
-        console.log(err);
+        $scope.isLogged = true;
+        form[err.field].$setValidity('mongoose', false);
+        $scope.siginError[err.field] = err.message;
       });
-    $modalInstance.close();
+    } else {
+      $scope.isLogged = true;
+    }
   };
 
   $scope.cancel = function () {
