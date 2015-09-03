@@ -50,8 +50,8 @@
                 </div>
                 <div class='form-group'>
                     <input type="email" name='email' placeholder='邮箱' class='form-control'
-                    ng-model='signup.email' required ng-pattern='/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/'
-                    mongoose-error>
+                    ng-model='signup.email' required mongoose-error
+                    ng-pattern='/^\w{1,15}(?:@(?!-))(?:(?:[a-z0-9-]*)(?:[a-z0-9](?!-))(?:\.(?!-)))+[a-z]{2,4}$/'>
                     <div ng-messages='signup_form.email.$error' ng-if='submitted' role='alert' 
                     class='bg-danger warning-messages'>
                         <div ng-message='required' class='text-warning warning-message'>

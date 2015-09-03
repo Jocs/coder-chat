@@ -22,7 +22,11 @@ angular.module('cc')
   				* 在ng－message就会显示。设置为true，对应的ng-message不会显示｜
   				*－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
   				*/
-  				ctrl.$setValidity('pattern', /^\w+$/.test(val));
+          /*pattern正则表达式（不区分大小写），匹配以字母、下滑线、汉子开头
+          * 以字母、数字、下划线、汉子结尾的字符串。
+          */
+          var pattern = /^[a-zA-Z_\u4E00-\u9FFF]+[\w\u4E00-\u9FFF]*$/i;
+  				ctrl.$setValidity('pattern', pattern.test(val));
 
   				if(!val || val.length === 0 ){
   					ctrl.$setValidity('requiredI',false);
@@ -47,11 +51,8 @@ angular.module('cc')
   						ctrl.$setValidity('checking',true);
   						ctrl.$setValidity('isUsed', false);
   					} else {
-  						ctrl.$setValidity('required', true);
-  						ctrl.$setValidity('pattern', true);
   						ctrl.$setValidity('requiredI',true);
   						ctrl.$setValidity('minlength',true);
-  						ctrl.$setValidity('maxlength', true);
   						ctrl.$setValidity('checking',true);
   						ctrl.$setValidity('isUsed', true);
 
