@@ -1,5 +1,5 @@
 angular.module('cc')
-	.controller('NavController', function($rootScope, $scope, $location, Auth){
+	.controller('NavController', function($rootScope, $scope, $location,$interval, Auth){
 		$scope.isCollapsed = true;
 		$scope.brand = {
 			'icon':'glyphicon glyphicon-globe'
@@ -51,7 +51,19 @@ angular.module('cc')
 			$location.path('/');
 			$rootScope.isLoggedIn = false;
 		};
-
+		$scope.showPost = function(){
+			var count = 0;
+			angular.element('body').css('overflow','hidden');
+			$rootScope.$broadcast('$showPost', true);
+			var timer = $interval(function(){
+				count ++;
+				if(count <= 5){
+					angular.element('#blur').css('webkitFilter' , 'blur(' + count + 'px)');
+				} else {
+					$interval.cancel(timer);
+				}
+			},100);
+		};
 
 
 

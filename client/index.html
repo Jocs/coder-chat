@@ -5,14 +5,22 @@
 	<base href="/">
 	<title>Document</title>
 	<link rel="stylesheet" href="./bower/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="./bower/font-awesome.css">
 	<link rel="stylesheet" href="./components/navbar/navbar.css">
 	<link rel="stylesheet" href="./components/login/login.css">
 	<link rel="stylesheet" href="./app/app.css">
+	<link rel="stylesheet" href="./components/post/post.css">
+
 </head>
 <body ng-app="cc">
-	<div ng-include="'./components/navbar/navbar.html'"></div>
-	<div ng-include="'./components/login/login.html'"></div>
-	<div ui-view></div>
+    <div ng-include="'./components/post/post.html'"></div>
+	<!--#blur中的视图是在需要的时候可以高斯模糊-->
+	<div id='blur'>
+		<div ng-include="'./components/navbar/navbar.html'"></div>
+		<div ng-include="'./components/login/login.html'"></div>
+		<div ui-view></div>
+	</div>
+	
 
 	<!--js 文件引用-->
 	<script src='./bower/jquery/dist/jquery.js'></script>
@@ -38,6 +46,8 @@
 	<script src='./components/navbar/navbar.js'></script>
 	<script src='./components/login/login.directive.js'></script>
 	<script src='./components/login/login.controller.js'></script>
+	<script src='./components/post/post.controller.js'></script>
+	<script src='./components/post/post.directive.js'></script>
 	
 </body>
 </html>
