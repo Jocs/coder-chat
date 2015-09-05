@@ -1,9 +1,9 @@
 <div ng-controller="PostController">
-  <div ng-if='isShowPost' >
+  <div ng-if='isShowPost' class='post-animation'>
   	<div id='post-mask' ng-click='closePost()'></div>
   	<div id='post-panel'>
   		<div my-draggable style='whith:100%;height:25px;cursor:pointer;'></div>
-  		<form name='post_form' ng-submit="post()">
+  		<form name='post_form' ng-submit="postForm()">
   			<div class='from-group'>
   				<input type="text" name='title' ng-model='post.title' placeholder='文章标题'
   				required class='form-control'>
@@ -39,9 +39,34 @@
 	                <a class='btn' data-role='p' href='#'>p</a>
 	            </div>
 	        </div>
-	        <div id='editor' class='span12' contenteditable blur-data='post.content'></div>
-	        <input type="text" ng-model='post.content' class='form control'>
+	        <div id='editor' class='span12' contenteditable onkeyup-data></div>
+			<label for="">标签:标签可以是文章的关键词，让别人更容易搜索到你的文章</label>
+	        <div class='form-group'>	
+	        	<div class='input-group pull-left' style='width:270px'>
+			        <input type="text" class='form-control' ng-model='tem.tag'>
+					<div class='input-group-addon'>
+						<a href="#" ng-click='addTag()'><span class='glyphicon glyphicon-plus'></span></a>
+					</div>	
+			    </div>
+			    <ul class='pull-right' style='width:500px;' id='post-tags'>
+			    	<li ng-repeat="tag in post.tags">{{tag}}
+						<a href='#' ng-click='removeTag($index)'>
+						    <span class='glyphicon glyphicon-remove'></span>
+						</a>
+			    	</li>
+			    </ul>
+	        </div>
+	        <div class='form-group' style='padding-top:25px;'>
+	        	 <a href="#" class='btn btn-default pull-right' ng-click='closePost()'>取消</a>
+	        	<button type='submit' class='btn btn-success pull-right' 
+	        	style='margin-right:5px;'>发布</button>
+	        </div>  
   		</form>	
   	</div>
   </div>
 </div>
+
+
+
+
+

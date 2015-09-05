@@ -26,4 +26,60 @@
 	min-height: 200px;
 	max-height: 350px;
 	overflow: auto;
+	margin-bottom: 5px;
 }
+#post-panel label{
+	color:#aaa;
+}
+.post-animation{
+	transform-origin:1250px 50px;
+}
+@-webkit-keyframes animationView-enter{
+	from{opacity: .5;
+		transform:scale(0);} 
+	to {opacity: 1;
+	    transform:scale(1);}
+}
+@-webkit-keyframes animationView-leave{
+	from{opacity: 1;
+		transform:scale(1);} 
+	to {opacity: .5;
+		transform:scale(0);}
+}
+.post-animation.ng-enter{
+	-webkit-animation: .5s ease-in animationView-enter;
+}
+.post-animation.ng-leave{
+	-webkit-animation: .5s ease-out animationView-leave;
+}
+#post-tags{
+	padding-left:5px;
+	padding-right: 5px;
+	margin-bottom: 0;
+	list-style: none;
+	overflow: hidden;
+	height: 40px;
+}
+#post-tags li{
+	font-size: 16px;
+	color:#555;
+	display: inline-block;
+	padding: 5px;
+	background: #eff6fa;
+	border-radius: 20px;
+	margin-right: 5px;
+}
+#post-tags li a{
+	color:#259;
+}
+
+
+
+
+
+
+
+
+
+
+

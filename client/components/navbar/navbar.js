@@ -55,6 +55,7 @@ angular.module('cc')
 			var count = 0;
 			angular.element('body').css('overflow','hidden');
 			$rootScope.$broadcast('$showPost', true);
+			//timer是用来使背景虚化－》高斯模糊效果
 			var timer = $interval(function(){
 				count ++;
 				if(count <= 5){

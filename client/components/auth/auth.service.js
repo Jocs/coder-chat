@@ -78,6 +78,10 @@ angular.module('cc')
 		    	} else {
 		    		cb(false);
 		    	}
+		    },
+		    //get current user
+		    getCurrentUser: function(){
+		    	return currentUser;
 		    }
 
 
