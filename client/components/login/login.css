@@ -5,10 +5,10 @@
 	padding-left: 10px;
 }
 @-webkit-keyframes animateView-active{
-	0% {left: 0;}     10% {left: 5px;}  20% {left: 0;}
-	30% {left: -5px;} 40% {left: 0;}    50% {left: 5px;}
-	60% {left: 0;}    70% {left: -5px;} 80% {left: 0;}
-	90% {left: 5px;}  100%{left:0;}
+	0% {left: 0;}     10% {left: 9px;}  20% {left: -8px;}
+	30% {left: 7px;} 40% {left: -6px;}    50% {left: 5px;}
+	60% {left: -4px;}    70% {left: 3px;} 80% {left: -2px;}
+	90% {left: 1px;}  100%{left:0;}
 }
 .warning-messages.ng-active{
 	-webkit-animation:.5s ease-in animateView-active;

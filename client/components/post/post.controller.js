@@ -50,8 +50,14 @@ angular.module('cc')
     $scope.removeTag = function(index){
       $scope.post.tags.splice(index,1);
     };
-    $scope.postForm = function(){
-      console.log($scope.post);
+    $scope.isPosted = false;
+    $scope.postForm = function(form){
+      if(form.$valid && $scope.post.content){
+        console.log('posted');
+      } else {
+        console.log('error');
+        $scope.isPosted = true;
+      }
     };
 
 

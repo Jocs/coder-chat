@@ -53,14 +53,31 @@ angular.module('cc')
       }
     };
   })
+  /*
+  * onkeyupData指令用途：
+  * 当元素监听到‘keyup’事件，就会把元素的innerHTML复制给作用域中的content。
+  * 在定义指令中，scope属性可以设定三个值。
+  * 1、scope：false 指令的作用域和父作用域是同一个作用域。
+  * 2、scope：true 指令的scope 继承父作用域。是父作用域的一个字作用域。（类似闭包）
+  * 3. scope:{
+  *           property1: '@', //单向数据绑定
+  *           property2: '=', //双向数据绑定
+  *           property3: '&'  //引用‘父作用域’的方法
+  *          }
+  */
   .directive('onkeyupData', function(){
     return {
       restrict: 'A',
-      scope: false,
+      scope: {
+        content: '=postContent'
+      },
       controller: function($scope, $element, $attrs){
         $element.bind('keyup',function(){
-          $scope.post.content = $element.html();
+          $scope.content = $element.html();
+          var warn_ele = $element.next().next();
+          $element.html()? warn_ele.addClass('hidden'): warn_ele.removeClass('hidden');
         });
+        
       }
     };
   });
