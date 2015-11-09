@@ -25,6 +25,7 @@ mongoose.connection.on('error', function(err){
 
 require('./config/express')(app);
 require('./routes')(app);
+require('./jelog/jelog')(app);
 
 //start a server 
 server.listen(config.port, function(){
