@@ -82,13 +82,9 @@ UserSchema
 			};
 			return respond(true);
 		});
-	},'邮箱已被使用,请换个邮箱再试!');
+	}, '邮箱已被使用,请换个邮箱再试!');
 
 /*pre save hook*/
-/*
-*
-*
-*/
 UserSchema.pre('save', function(next){
 	if(!this.isNew) return next();
 	if(!(this.hashedPassword && this.hashedPassword.length)) 

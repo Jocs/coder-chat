@@ -37,7 +37,7 @@ var options = {
 var uploader = require('blueimp-file-upload-expressjs')(options);
  
  
-module.exports = function (app) {
+module.exports = function ( app ) {
     app.get('/screenshots', function(req, res) {
       uploader.get(req, res, function (err,obj) {
             if(!err){
@@ -48,7 +48,7 @@ module.exports = function (app) {
     });
  
     app.post('/screenshots', function(req, res) {
-      uploader.post(req, res, function (error,obj, redirect) {
+      uploader.post(req, res, function (error, obj, redirect) {
           if(!error){
             res.send(JSON.stringify(obj)); 
           }

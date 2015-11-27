@@ -1,6 +1,6 @@
 angular.module('cc',[
 	'ui.bootstrap',
-	'ngCookies',
+	 'ngCookies',
 	'ngResource',
 	'ui.router',
 	'ngMessages',
@@ -23,6 +23,11 @@ angular.module('cc',[
 			},
 			responseError: function(response){
 				if(response.status === 401){
+					//下面三行代码是需要主动营销加的
+					if(typeof window.postMessage !== undefined){
+						window.postMessage(JSON.stringify(response), 'http://127.0.0.1:3000');
+					}
+					
 					$location.path('/');
 					$cookies.remove('token');
 					return $q.reject(response);

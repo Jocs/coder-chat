@@ -1,57 +1,75 @@
-(function(angular){
+(function( window, document) {
+	//全局的jerror对象
+	var jerror = new ErrorLog();
 
-	angular.module('jelog' ,['jelog.service','ui.router'])
-	.run(function ( $window , jerror , $rootScope , $location, $document, Xpath) {
-		window.addEventListener('error' , function(e){
-			jerror.errorLog = {
-				message: e.message,
-				filename: e.filename,
-				lineno: e.lineno,
-				timeStamp: e.timeStamp,
-				runEnvironment : window.navigator.userAgent
-			};
-			jerror.sendError();
-			jerror.canvas2blob().then(function(data){
-				jerror.screenshots = data;
-				jerror.sendScreenshots(data);
-			});
+	window.addEventListener('message', function(e){
+		var origin = location.origin;
+		if(e.origin !== origin) return;
+		var obj = JSON.parse(e.data);
+		jerror.errorLog = obj;
+		sendErrorAndScreenshots(jerror);
+	}, false);
 
-		});
+	window.addEventListener('error' , function(e){
+		jerror.errorLog = {
+			message: e.message,
+			filename: e.filename,
+			lineno: e.lineno,
+			timeStamp: e.timeStamp,
+			runEnvironment : window.navigator.userAgent
+		};
+		if(/test\sfor\smanual\serrorlog\ssend/.test(jerror.errorLog.message)){
+			console.table([jerror.errorLog]);
+			console.table(jerror.process);
+		}
+		sendErrorAndScreenshots(jerror);
+	});
 
-		$document.bind('click' , function( e ) {
-			var process = getProcess(Xpath, angular, e);
-			jerror.process.push( process );
-		});
-
-		$document.bind('keyup' , function( e ){
-			var target = e.target;
-			if(e.keyCode == 13){
-				throw new testError('a test error');
-			};
-			//console.log(e);
-			if(target.tagName.toLowerCase() == 'input' 
-				|| target.tagName.toLowerCase() == 'textarea'
-				|| target.hasAttribute('contenteditable')){
-				var process = getProcess(Xpath, angular, e);
-				if( e.keyCode == 8 ) {
-					
-					jerror.process.push( process );
-				} else if( e.ctrlKey && e.keyCode == 88 
-					&& process.position.startPosition !== process.position.endPosition) {
-					jerror.process.push( process );
-				} 
-
-			}
-		});
-
-		$document.bind('textInput' , function( e ){
-			var process = getProcess(Xpath, angular, e);
-			jerror.process.push(process);
-
-		});
-
-	})
+	document.addEventListener('click', function(e){
+		var process = getProcess(e);
+		jerror.process.push( process );
+	});
 	
+	document.addEventListener('keyup' , function(e){
+		var target = e.target;
+			//console.log(e);
+		if(target.tagName.toLowerCase() == 'input' 
+			  || target.tagName.toLowerCase() == 'textarea'
+				|| target.hasAttribute('contenteditable')){
+			var process = getProcess(e);
+
+			if( e.keyCode == 8 ) {
+				jerror.process.push( process );
+			} else if( e.ctrlKey && e.keyCode == 88 
+				&& process.position.startPosition !== process.position.endPosition) {
+				jerror.process.push( process );
+			} 
+
+		}
+	});
+
+	document.addEventListener('textInput' , function( e ){
+		
+		var process = getProcess(e);
+		jerror.process.push(process);
+
+	});
+
+	//下面是上帝之手操作，会把错误信息打印到控制台，并且手动生成一个错误，触发错误发送机制
+	document.addEventListener('keydown' , function(e){
+		if(e.shiftKey && e.altKey && e.ctrlKey && e.keyCode === 69){
+			throw new Error('test for manual errorlog send!');
+		}
+	});
+
+	function sendErrorAndScreenshots(jerror){
+		jerror.sendError();
+		jerror.canvas2blob().then(function(data){
+			jerror.screenshots = data;
+			jerror.sendScreenshots(data);
+		});
+	}
+
 	function getPositions( element ) {
 			var startPosition = -1;//所选文本的开始位置
 			var endPosition = -1;//所选文本的结束位置
@@ -66,7 +84,7 @@
 				startPosition = drange.text.length - range.text.length;
 				endPosition = startPosition + range.text.length;
 			}
-			else if( window.getSelection ) {
+			else if( window.getSelection && element.type && element.type !== 'checkbox' ) {
 			//Firefox,Chrome,Safari etc
 				startPosition = element.selectionStart;
 				endPosition = element.selectionEnd;
@@ -77,7 +95,8 @@
 			 	}
 	}
 
-	function getProcess(Xpath, angular, e){
+	function getProcess(e){
+		
 		var target = e.target , value, position;
 		if(target.tagName.toLowerCase() == 'input' && target.type == 'email' ){
 			position = {
@@ -93,21 +112,22 @@
 			position = getPositions(target);
 		}
 		if(e.type == 'textInput'){
-			value = e.originalEvent.data;
+			value = e.data;
 		} else {
 			value = '';
 		}
-		if(e.hasOwnProperty('type')){
+		
+		if(e.type !== undefined){
 			if(e.type == 'click'){
 				return {
 					type : 'click',
-					xpath : Xpath.getXpath(angular.element(target)),
+					xpath : jerror.getXpath(target),
 					timeStamp : +new Date()
 				}
 			} else if(e.type == 'textInput' || e.type == 'keyup') {
 				return {
 					type : 'textModify',
-					xpath : Xpath.getXpath(angular.element(target)),
+					xpath : jerror.getXpath(target),
 					value : value,
 					position : position,
 					fullValueLength : e.target.value && e.target.value.length || e.target.textContent.length,
@@ -119,5 +139,4 @@
 		}
 	}
 
-
-})(angular);
+	})(window, document);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="cc">
 <head>
 	<meta charset="UTF-8">
 	<base href="/">
@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="./components/post/post.css">
 
 </head>
-<body ng-app="cc">
+<body>
     <div ng-include="'./components/post/post.html'"></div>
 	<!--#blur中的视图是在需要的时候可以高斯模糊-->
 	<div id='blur'>
@@ -55,6 +55,10 @@
 	<!--<script src='./components/jelog/html2canvas.js'></script>
 	<script src='./components/jelog/jelog.js'></script>
 	<script src='./components/jelog/jelog/service.js'></script> -->
+	<script src="./bower/gremlins/gremlins.min.js"></script>
+  <script>
+    gremlins.createHorde().unleash();
+  </script>
 	
 </body>
 </html>

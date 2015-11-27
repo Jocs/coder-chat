@@ -1,6 +1,6 @@
   
 var processes = require('../../server/jelog/jserror.log')['process'];
-console.log(protractor.Key)
+console.log(processes);
 describe('' , function () {
 
 	it('should location to index', function() {
